@@ -1,0 +1,45 @@
+/*
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                    Version 2, December 2004
+
+ Copyright (C) 2015 Jason Gardner <jason.gardner.lv@gmail.com>
+
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is allowed as long
+ as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. You just DO WHAT THE FUCK YOU WANT TO.
+
+*/
+package freecake.tenthousand;
+
+import jline.console.ConsoleReader;
+
+public final class Console extends Thread {
+
+    private final InputListener listener;
+
+    public Console(InputListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void run() {
+        try {
+            int charCode = -1;
+            ConsoleReader reader = new ConsoleReader();
+            reader.setBellEnabled(false);
+            while ((charCode = reader.readCharacter()) != -1) {
+                listener.handleInput(charCode);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            System.exit(1);
+        }
+    }
+
+}
